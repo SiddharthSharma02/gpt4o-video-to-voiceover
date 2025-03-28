@@ -1,57 +1,76 @@
-AI-Powered Video Narration with GPT-4 Vision & TTS
-This Python script automates the process of generating an AI-driven voiceover for a given video using OpenAI's GPT-4 Vision API and Text-to-Speech (TTS) models. It extracts frames from the video, analyzes them to create a step-by-step tutorial-style narration, converts the text into speech, and merges the voiceover with the original video.
+Video Frame Extraction, Description, and Voiceover Generation
+
+Overview
+
+This project automates the process of extracting frames from a video, analyzing them using OpenAI's GPT-4 Vision API, generating a step-by-step tutorial-style description, converting the description into a voiceover, and merging the voiceover back with the original video.
 
 Features
-✅ Extracts frames from a video at regular intervals.
-✅ Uses GPT-4 Vision to analyze frames and generate a descriptive narration.
-✅ Converts the narration into a natural-sounding voiceover using OpenAI's TTS API.
-✅ Merges the generated voiceover with the original video.
-✅ Handles API errors with a retry mechanism for robustness.
 
-Installation
-Prerequisites
-Python 3.x
+Extracts frames from a video at regular intervals.
 
-Required libraries (install with the following command):
+Uses OpenAI's GPT-4 Vision API to generate descriptions of the extracted frames.
 
-bash
-Copy
-Edit
-pip install openai opencv-python moviepy
-Usage
-Set up OpenAI API Key
+Converts the generated descriptions into an AI-generated voiceover.
 
-Store your OpenAI API key in a file named openaiapikey.txt.
+Merges the generated voiceover with the original video to create an informative tutorial-style output.
 
-Modify Video Path
+Dependencies
 
-Update the video_path variable in the script with your video file path.
+Ensure you have the following Python libraries installed:
 
-Run the Script
+pip install opencv-python moviepy openai
 
-bash
-Copy
-Edit
-python script.py
+File Structure
+
+├── main.py                  # Main script
+├── openaiapikey.txt         # File containing the OpenAI API key
+├── extracted_frames/        # Folder where extracted frames are stored
+├── voiceover.mp3            # Generated voiceover file
+├── tt2.mp4                  # Final output video
+└── README.md                # Project documentation
+
 How It Works
-Extracts Key Frames → Saves frames from the video at a defined interval.
 
-Analyzes Frames with GPT-4 Vision → Generates a step-by-step explanation.
+1. Extract Frames
 
-Creates a Voiceover → Converts the generated text into speech.
+The script extracts frames from the video at a specified interval (default: every 60 frames) and saves them in the extracted_frames/ folder.
 
-Merges Voiceover with Video → Produces a final narrated video.
+2. Analyze Frames with GPT-4 Vision API
 
-Output
-The script outputs:
+The extracted frames are converted to base64 format and sent to OpenAI's GPT-4 Vision API with a predefined prompt to generate a step-by-step tutorial-style description.
 
-voiceover.mp3: AI-generated narration.
+3. Generate Voiceover
 
-tt2.mp4: The final video with merged audio narration.
+The generated text is converted into speech using OpenAI's text-to-speech model and saved as an audio file (voiceover.mp3).
 
-Future Enhancements
-Support for multiple voice options.
+4. Merge Audio with Video
 
-Improved frame selection for better contextual analysis.
+The original video and generated voiceover are merged into a final output video (tt2.mp4).
 
-GUI-based input selection for ease of use.
+Usage
+
+Place your video file in the project directory.
+
+Update the video_path variable in the script with the actual video file path.
+
+Store your OpenAI API key in openaiapikey.txt.
+
+Run the script:
+
+python main.py
+
+Configuration
+
+Frame Extraction Interval: Modify frame_interval in extract_frames() to adjust how frequently frames are extracted.
+
+GPT Model: Change the model parameter in get_frame_descriptions() if needed.
+
+Voice Type: Modify voice in create_voiceover() to change the AI-generated voice.
+
+Error Handling
+
+Implements retry logic for API calls in case of server errors.
+
+Checks if video files are valid before processing.
+
+Skips processing if no frames are extracted.
